@@ -1,0 +1,27 @@
+name: Demo
+run-name: ${{ github.actor }} is testing Github Actions
+on:
+  push:
+    tags:
+      - v*.*.*
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Release Notes
+        uses: jhreyess/auto-release-notes@main
+
+      - name: Create rerlease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ guthub.ref_name }}
+        run: |
+          gh release create "$TAG" \
+            --title "This is my release $TAG" \
+            --notes-file release-notes.md \
+            --draft --verify-tag \
