@@ -3,6 +3,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://jhreyess.github.io',
+	base: 'GHActionsTest/test',
 	integrations: [
 		starlight({
 			title: 'My Docs',
