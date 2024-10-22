@@ -1,10 +1,15 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+const build_version = process.env.BUILD_VERSION || 'dev'
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://jhreyess.github.io',
-	base: '/GHActionsTest/test',
+	base: `/GHActionsTest/${build_version}`,
+	build: {
+		assets: 'assets',
+	},
 	integrations: [
 		starlight({
 			title: 'My Docs',

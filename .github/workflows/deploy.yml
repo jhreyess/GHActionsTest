@@ -23,20 +23,20 @@ jobs:
       - name: Build
         shell: "bash"
         working-directory: ./docs
-        run: npm run build
+        run: BUILD_VERSION=${{ github.ref_name }} npm run build
       - name: Checkout branch
         run: |
           git fetch origin
           git checkout gh-pages
       - name: Copy dist folder
         run: |
-          mkdir -p test
-          cp -r docs/dist/* test/
+          mkdir -p ${{ github.ref_name }}
+          cp -r docs/dist/* ${{ github.ref_name }}/
       - name: Commit and push
         run: |
           git config user.name "jhreyess"
           git config user.email "josue.hreyess@gmail.com"
-          git add test
+          git add ${{ github.ref_name }}
           git commit -m "Update files" --allow-empty
           git push origin gh-pages
         env:
