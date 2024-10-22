@@ -30,7 +30,7 @@ jobs:
           git checkout gh-pages
       - name: Copy dist folder
         run: |
-          mkdir test
+          mkdir -p test
           cp -r docs/dist/* test/
       - name: Commit and push
         run: |
