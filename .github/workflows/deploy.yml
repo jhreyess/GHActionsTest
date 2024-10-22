@@ -24,11 +24,11 @@ jobs:
         uses: actions/setup-node@v4
       - name: Install
         shell: "bash"
-        working-directory: ${{ inputs.path }}
+        working-directory: ./docs
         run: npm install
       - name: Build
         shell: "bash"
-        working-directory: ${{ inputs.path }}
+        working-directory: ./docs
         run: npm run build
 
   deploy:
