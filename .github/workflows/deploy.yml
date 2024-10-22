@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Activa el flujo de trabajo cada vez que hagas push a la rama `main`
+  # Usando un nombre de rama diferente? Reemplaza `main` con el nombre de tu rama
+  push:
+    branches: [ main ]
+  # Te permite ejecutar este flujo de trabajo manualmente desde la pestaña Acciones en GitHub.
+  workflow_dispatch:
+
+# Permite que este trabajo clone el repositorio y cree un despliegue de página
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+      - name: Install
+        shell: "bash"
+        working-directory: ${{ inputs.path }}
+        run: npm install
+      - name: Build
+        shell: "bash"
+        working-directory: ${{ inputs.path }}
+        run: npm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        run: |
+          git fetch origin
+          git checkout gh-pages
+      - name: Copy dist folder
+        run: cp -r docs/dist/* test/
+      - name: Commit and push
+        run: |
+          git config user.name "jhreyess"
+          git config user.email "josue.hreyess@gmail.com"
+          git add test
+          git commit -m "Update files"
+          git push origin gh-pages
+          
+        
