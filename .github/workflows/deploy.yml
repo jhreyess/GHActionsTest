@@ -30,11 +30,6 @@ jobs:
         shell: "bash"
         working-directory: ./docs
         run: npm run build
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout branch
         run: |
           git fetch origin
@@ -48,5 +43,3 @@ jobs:
           git add test
           git commit -m "Update files"
           git push origin gh-pages
-          
-        
